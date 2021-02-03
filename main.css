@@ -1,0 +1,44 @@
+/*
+h1 - header topic
+h2 - header subtopic
+h3 - topic
+h4 - subtopic
+p - information
+section - meant body content
+ */
+html, body {
+    height: 100%;
+    box-sizing: content-box;
+    text-align: center;
+    align-content: center;
+}
+header, footer{
+    align-content: center;
+    text-align: center;
+    background-color: #85ACD6;
+
+}
+/* Text */
+h1{
+    font-size: 120%;
+    color: #e56f00;
+    font-family: 'Baloo Paaji 2', cursive;
+}
+h2{
+    color: #2c5684;
+}
+p{
+    color: #000;
+}
+/* Divs */
+.section{
+    background-color: #ffab5c;
+}
+#wrap {
+    min-height: 100%;
+}
+
+#main {
+    overflow:auto;
+    padding-bottom:150px; /* this needs to be bigger than footer height*/
+}
