@@ -8,37 +8,45 @@ section - meant body content
  */
 html, body {
     height: 100%;
-    box-sizing: content-box;
+    width: 100%;
     text-align: center;
     align-content: center;
+    background: #2c5684;
+    color: #2c5684;
 }
-header, footer{
+header{
     align-content: center;
     text-align: center;
-    background-color: #85ACD6;
-
+    background-color: #85acd6;
 }
 /* Text */
 h1{
     font-size: 120%;
-    color: #e56f00;
+    color: #ff7a00;
     font-family: 'Baloo Paaji 2', cursive;
 }
-h2{
+h2 {
     color: #2c5684;
 }
-p{
-    color: #000;
+h3{
+    color:#FF7A00;
+}
+h4{
+    color: #2c5684;
+}
+p, li{
+    color: #ffffff;
+}
+li{
+    list-style-type: none;
 }
 /* Divs */
 .section{
-    background-color: #ffab5c;
+    width:100%;
 }
-#wrap {
-    min-height: 100%;
-}
-
-#main {
-    overflow:auto;
-    padding-bottom:150px; /* this needs to be bigger than footer height*/
+.sectionBody{
+    text-align: justify;
+    background-color: #db8f49;
+    border-radius:20px;
+    padding: 20px;
 }
