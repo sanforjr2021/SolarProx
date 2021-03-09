@@ -1,4 +1,4 @@
-/**
+/*
  * Class: SolarProx
  * Author: Jacob Sanford
  * Date: 1/21/2021
@@ -8,24 +8,38 @@
  */
 package solarprox;
 
+import solarprox.data.DirectoryHandler;
+import solarprox.data.ProxmoxHandler;
 import solarprox.util.FileLogger;
+import solarprox.util.UtilityHandler;
+import solarprox.web.TomcatHandler;
 
 import static solarprox.util.FileLogger.*;
 
 public class SolarProx {
-    private FileLogger fileLogger;
-    public SolarProx(){
-        fileLogger = new FileLogger();
-        logInfo("SolarProx is Initialized");
+    private UtilityHandler  utilityHandler;
+    private DirectoryHandler directoryHandler;
+    private ProxmoxHandler proxmoxHandler;
+    private TomcatHandler tomcatHandler;
 
+    public SolarProx(){
+        //Called at starting the program.
+        utilityHandler = new UtilityHandler();
+        directoryHandler = new DirectoryHandler();
+        proxmoxHandler = new ProxmoxHandler();
+        tomcatHandler = new TomcatHandler();
         Runtime.getRuntime().addShutdownHook(onShutdown()); //calls shutdown thread on attempting to exit
     }
 
+    //This is called when the program shutdown. Every module should have a class that handles shutting down the module to make it easier to read the calls.
     private Thread onShutdown(){
         return new Thread(){
             public void run(){
-                fileLogger.onExit();
-
+                utilityHandler.onShutdown();
+                directoryHandler.onShutdown();
+                proxmoxHandler.onShutdown();
+                tomcatHandler.onShutdown();
+                System.out.println("Shutting Down");
             }
         };
     }
