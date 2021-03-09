@@ -1,4 +1,4 @@
-/**
+/*
  * Class: FileLogger
  * Author: Jacob Sanford
  * Date: 1/21/2021
@@ -36,7 +36,7 @@ public class FileLogger{
             System.exit(1);
         }
     }
-    public static void onExit(){
+    public  void onExit(){
         logInfo("SolarProx is shutting down");
         printWriter.close();
 
