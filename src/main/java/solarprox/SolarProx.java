@@ -10,6 +10,7 @@ package solarprox;
 
 import solarprox.data.DirectoryHandler;
 import solarprox.data.ProxmoxHandler;
+import solarprox.util.ConfigHandler;
 import solarprox.util.FileLogger;
 import solarprox.util.UtilityHandler;
 import solarprox.web.TomcatHandler;
@@ -26,7 +27,12 @@ public class SolarProx {
         //Called at starting the program.
         utilityHandler = new UtilityHandler();
         directoryHandler = new DirectoryHandler();
-        proxmoxHandler = new ProxmoxHandler();
+        proxmoxHandler = new ProxmoxHandler(
+                ConfigHandler.getProperty("username"),
+                ConfigHandler.getProperty("password"),
+                ConfigHandler.getProperty("realm"),
+                ConfigHandler.getProperty("address")
+            );
         tomcatHandler = new TomcatHandler();
         Runtime.getRuntime().addShutdownHook(onShutdown()); //calls shutdown thread on attempting to exit
     }

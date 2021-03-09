@@ -17,6 +17,7 @@ public class ConfigHandler {
     private static final Properties PROPERTIES = new Properties();
     private static final File FILE = new File("config.properties");
     private static final double VERSIONNUMBER = 1.1;
+
     public ConfigHandler() {
         try {
             //Upon creating an empty file, write
@@ -29,6 +30,16 @@ public class ConfigHandler {
         loadConfig();
     }
 
+    /**
+     * Retrieves a value from config.properties with the associated value.
+     *
+     * @param key
+     * @return
+     */
+    public static String getProperty(String key) {
+        return PROPERTIES.getProperty(key);
+    }
+
     private void createNewConfig() {
         try {
             FileWriter writer = new FileWriter(FILE);
@@ -39,9 +50,10 @@ public class ConfigHandler {
             writer.write("username= " + "root");
             writer.write("password= " + "password");
             writer.write("realm= " + "pam");
+            writer.write("address= " + "127.0.0.1");
             //Insert any other values here for properties using the format
-            // writer.write(<key>= <default Value>);
-            //Make sure to have the values go after this comment.
+            //writer.write(<key>= <default Value>);
+            //Make sure to have the values go right above this
             writer.close();
             System.exit(0); // This is called as the config is filled out and will most likely crash.
         } catch (IOException e) {
@@ -52,7 +64,7 @@ public class ConfigHandler {
     private void loadConfig() {
         try {
             PROPERTIES.load(new FileInputStream(FILE));
-            if(Double.parseDouble(PROPERTIES.getProperty("version"))  != VERSIONNUMBER){
+            if (Double.parseDouble(PROPERTIES.getProperty("version")) != VERSIONNUMBER) {
                 System.out.println();
                 createNewConfig();
             }
@@ -62,9 +74,5 @@ public class ConfigHandler {
 
             System.exit(-1); //crash value
         }
-    }
-
-    public static String getProperty(String key) {
-        return PROPERTIES.getProperty(key);
     }
 }

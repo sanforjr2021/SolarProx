@@ -12,61 +12,75 @@ import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class FileLogger{
+public class FileLogger {
     private static PrintWriter printWriter;
     private static BufferedWriter bufferedWriter;
 
-    public FileLogger(){
+    public FileLogger() {
         String logPath = "logs/Log_" + getDateString() + ".log";
         new File("logs").mkdir();
-        try{
+        try {
             new File(logPath).createNewFile();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        try{
+        try {
             bufferedWriter = new BufferedWriter(new FileWriter(logPath, true));
             printWriter = new PrintWriter(bufferedWriter);
-
-
         } catch (IOException e) {
             System.err.println("The system logging did not load, closing program.");
             e.printStackTrace();
             System.exit(1);
         }
     }
-    public  void onExit(){
-        logInfo("SolarProx is shutting down");
-        printWriter.close();
 
-    }
-
-    public static void logInfo(String info){
+    /**
+     * logs information with the info tag in console and the log file.
+     *
+     * @param info
+     */
+    public static void logInfo(String info) {
         String infoMessage = "[INFO] " + getCompleteDateString() + " " + info;
         System.out.println(infoMessage);
         printWriter.append(infoMessage + "\n");
     }
 
-    public static void logWarning(String warning){
+    /**
+     * logs information with the warning tag in console and the log file.
+     *
+     * @param warning
+     */
+    public static void logWarning(String warning) {
         String warningMessage = "[WARNING] " + getCompleteDateString() + " " + warning;
         System.out.println(warningMessage);
         printWriter.append(warningMessage + "\n");
     }
 
-    public static void logError(String error){
+    /**
+     * logs information with the error tag in console and the log file.
+     *
+     * @param error
+     */
+    public static void logError(String error) {
         String errorMessage = "[ERROR] " + getCompleteDateString() + " " + error;
         System.err.println(errorMessage);
         printWriter.append(errorMessage + "\n");
     }
 
-    private static String getDateString(){
+    private static String getDateString() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM_dd_yyyy");
         return dateFormat.format(new Date());
     }
 
-    private static String getCompleteDateString(){
-       SimpleDateFormat completeTimeFormat = new SimpleDateFormat("[MM/dd/yyyy HH:mm:ss]");
+    private static String getCompleteDateString() {
+        SimpleDateFormat completeTimeFormat = new SimpleDateFormat("[MM/dd/yyyy HH:mm:ss]");
         return completeTimeFormat.format(new Date());
+    }
+
+    public void onExit() {
+        logInfo("SolarProx is shutting down");
+        printWriter.close();
+
     }
 }
