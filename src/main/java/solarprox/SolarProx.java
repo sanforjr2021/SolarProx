@@ -51,5 +51,9 @@ public class SolarProx {
     }
     public static void main(String[] args){
         new SolarProx();
+        box100 = new BoxHandler("100");
+        box100.startBox();
+        box100.stopBox();
+        box100.rollback();
     }
 }
