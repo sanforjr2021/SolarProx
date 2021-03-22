@@ -20,8 +20,8 @@ TICKET=$(decodeDataFromJson $DATA 'ticket')
 CSRF=$(decodeDataFromJson $DATA 'CSRFPreventionToken')
 
 NODE="pve"
-TARGET_VMID="100"
-SNAPSHOT_NAME="base"
+TARGET_VMID=${1:-"100"}
+SNAPSHOT_NAME=${2:-"base"}
 ROLLBACK_TASK_DATA=`curl -s -k -b "PVEAuthCookie=$TICKET" -H "CSRFPreventionToken: $CSRF" -X POST $HOST/api2/json/nodes/$NODE/qemu/$TARGET_VMID/snapshot/$SNAPSHOT_NAME/rollback`
 
 ROLLBACK_TASK_RESULT=$(decodeDataFromJson $ROLLBACK_TASK_DATA 'data')

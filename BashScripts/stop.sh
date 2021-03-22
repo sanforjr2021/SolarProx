@@ -20,7 +20,7 @@ TICKET=$(decodeDataFromJson $DATA 'ticket')
 CSRF=$(decodeDataFromJson $DATA 'CSRFPreventionToken')
 
 NODE="pve"
-TARGET_VMID="100"
+TARGET_VMID=${1:-"100"}
 
 STOP_TASK_DATA=`curl -s -k -b "PVEAuthCookie=$TICKET" -H "CSRFPreventionToken: $CSRF" -X POST $HOST/api2/json/nodes/$NODE/qemu/$TARGET_VMID/status/stop`
 
