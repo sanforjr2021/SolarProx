@@ -1,5 +1,7 @@
 package solarprox.web;
 
+import solarprox.data.ProxmoxHandler;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -23,8 +25,17 @@ public class Login extends HttpServlet {
 
             writer.println("<h1>This is a simple java servlet.</h1>");
 
+
+            try{
+                ProxmoxHandler.powerOff("100");
+                ProxmoxHandler.rollback("101");
+                ProxmoxHandler.powerOn("100");
+            } catch(IOException e){
+                writer.println("<h3>Failed to run command</h3>");
+            }
             writer.println("</body>");
             writer.println("</html>");
+
         }
     }
 
