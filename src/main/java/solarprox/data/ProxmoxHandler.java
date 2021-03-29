@@ -43,7 +43,7 @@ public class ProxmoxHandler {
      * @throws IOException
      */
     public static int rollback(String machineID) throws IOException {
-        Process p = new ProcessBuilder("scripts/stop.sh", machineID).start();
+        Process p = new ProcessBuilder("src/main/java/solarprox/data/scripts/stop.sh", machineID).start();
         System.out.println("Rolling back machine " + machineID);
         return 1;
     }
@@ -60,7 +60,7 @@ public class ProxmoxHandler {
      * @throws IOException
      */
     public static int rollback(String machineID, String stateName) throws IOException {
-        Process p = new ProcessBuilder("/scripts/stop.sh", machineID, stateName).start();
+        Process p = new ProcessBuilder("src/main/java/solarprox/data/scripts/stop.sh", machineID, stateName).start();
         System.out.println("Called rollback on " + machineID + " with statname of " + stateName);
         return 1;
     }
@@ -122,7 +122,7 @@ public class ProxmoxHandler {
      * @throws IOException
      */
     public static int powerOn(String machineID) throws IOException {
-        Process p = new ProcessBuilder("/scripts/start.sh", machineID).start();
+        Process p = new ProcessBuilder("src/main/java/solarprox/data/scripts/start.sh", machineID).start();
         System.out.println("Powering on machine " + machineID);
         return 0;
     }
@@ -142,7 +142,7 @@ public class ProxmoxHandler {
      * @throws IOException
      */
     public static int powerOff(String machineID) throws IOException {
-        Process p = new ProcessBuilder("/scripts/stop.sh", machineID).start();
+        Process p = new ProcessBuilder("src/main/java/solarprox/data/scripts/stop.sh", machineID).start();
         System.out.println("Stopping machine " + machineID);
         return 0;
     }

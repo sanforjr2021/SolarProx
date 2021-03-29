@@ -33,7 +33,6 @@ public class SolarProx {
                 ConfigHandler.getProperty("address")
             );
         tomcatHandler = new TomcatHandler();
-        System.out.println("Test");
         try {
             System.out.println("test");
             ProxmoxHandler.rollback("100");
