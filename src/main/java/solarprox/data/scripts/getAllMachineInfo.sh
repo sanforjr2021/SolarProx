@@ -21,8 +21,30 @@ TICKET=$(decodeDataFromJson $DATA 'ticket')
 CSRF=$(decodeDataFromJson $DATA 'CSRFPreventionToken')
 
 NODE=${1}
-TARGET_VMID=${2}
 
-START_TASK_DATA=`curl -s -k -b "PVEAuthCookie=$TICKET" -H "CSRFPreventionToken: $CSRF" -X POST $HOST/api2/json/nodes/$NODE/qemu/$TARGET_VMID/status/start`
+
+START_TASK_DATA=`curl -s -k -b "PVEAuthCookie=$TICKET" -H "CSRFPreventionToken: $CSRF" -X GET $HOST/api2/json/nodes/$NODE/qemu`
 
 START_TASK_RESULT=$(decodeDataFromJson $START_TASK_DATA 'data')
+echo $START_TASK_DATA
+
+#echo $data['name']
+#$url="https://172.16.66.10:8006/api2/json/nodes/$NODE/qemu";
+#$text = file_get_contents($url);
+
+#$data = json_decode($text, true);
+
+##if ($data['Success'] === true) {
+#    $v = [];
+#    $columns = [""name","status""];
+#    for ($i = 0; $i< count($data['Value']); $i++) {
+#        foreach ($data['Value'][$i] as $key => $val) {
+#            if (in_array($key, $columns)) {
+#                $v[$key] = $val;
+#            }
+#        }
+#        $data['Value'][$i] = $v;
+#    }
+#}
+
+#$text = json_encode($data);##
