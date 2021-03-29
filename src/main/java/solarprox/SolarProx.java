@@ -11,11 +11,10 @@ package solarprox;
 import solarprox.data.DirectoryHandler;
 import solarprox.data.ProxmoxHandler;
 import solarprox.util.ConfigHandler;
-import solarprox.util.FileLogger;
 import solarprox.util.UtilityHandler;
 import solarprox.web.TomcatHandler;
 
-import static solarprox.util.FileLogger.*;
+import java.io.IOException;
 
 public class SolarProx {
     private UtilityHandler  utilityHandler;
@@ -34,6 +33,16 @@ public class SolarProx {
                 ConfigHandler.getProperty("address")
             );
         tomcatHandler = new TomcatHandler();
+        System.out.println("Test");
+        try {
+            System.out.println("test");
+            ProxmoxHandler.rollback("100");
+            ProxmoxHandler.powerOn("100");
+            ProxmoxHandler.powerOff("77");
+            ProxmoxHandler.rollback("33", "state1");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Runtime.getRuntime().addShutdownHook(onShutdown()); //calls shutdown thread on attempting to exit
     }
 
@@ -51,10 +60,5 @@ public class SolarProx {
     }
     public static void main(String[] args){
         new SolarProx();
-        BoxHandler box100;
-        box100 = new BoxHandler("100");
-        int a = box100.startBox();
-        int b = box100.stopBox();
-        int c = box100.rollback();
     }
 }

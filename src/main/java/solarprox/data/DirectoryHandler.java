@@ -1,6 +1,8 @@
 package solarprox.data;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
+
+import jdk.jshell.spi.ExecutionControl;
 
 import java.util.ArrayList;
 
@@ -16,7 +18,7 @@ public class DirectoryHandler {
      * @return
      */
     public static boolean addUser(UserContainer user) {
-        throw new NotImplementedException();
+        return false;
     }
 
     //////////////////////////
@@ -37,7 +39,7 @@ public class DirectoryHandler {
      * @return
      */
     public static boolean removeUser(UserContainer user) {
-        throw new NotImplementedException();
+        return false;
     }
 
     /**
@@ -47,7 +49,7 @@ public class DirectoryHandler {
      * @return
      */
     public static boolean updateUser(UserContainer user) {
-        throw new NotImplementedException();
+        return false;
     }
 
     /**
@@ -56,7 +58,7 @@ public class DirectoryHandler {
      * @return
      */
     public static ArrayList<UserContainer> getAllUsers() {  //Maybe be easier and faster as a list of strings instead
-        throw new NotImplementedException();
+        return null;
     }
 
     /**
@@ -66,7 +68,7 @@ public class DirectoryHandler {
      * @return
      */
     public static UserContainer getUserByUsername(String username) {
-        throw new NotImplementedException();
+        return null;
     }
 
     /**
@@ -76,7 +78,7 @@ public class DirectoryHandler {
      * @return
      */
     public static boolean addGroup(GroupContainer group) {
-        throw new NotImplementedException();
+        return false;
     }
 
     //////////////////////////
@@ -90,7 +92,7 @@ public class DirectoryHandler {
      * @return
      */
     public static boolean removeGroup(UserContainer group) {
-        throw new NotImplementedException();
+       return false;
     }
 
     /**
@@ -100,7 +102,8 @@ public class DirectoryHandler {
      * @return
      */
     public static boolean updateGroup(GroupContainer group) {
-        throw new NotImplementedException();
+
+        return false;
     }
 
     /**
@@ -109,7 +112,7 @@ public class DirectoryHandler {
      * @return
      */
     public static ArrayList<GroupContainer> getAllGroups() {  //Maybe be easier and faster as a list of strings instead
-        throw new NotImplementedException();
+        return null;
     }
 
     /**
@@ -119,7 +122,7 @@ public class DirectoryHandler {
      * @return
      */
     public static boolean addMachine(MachineContainer machine) {
-        throw new NotImplementedException();
+        return false;
     }
 
     /**
@@ -129,7 +132,7 @@ public class DirectoryHandler {
      * @return
      */
     public static boolean removeMachine(MachineContainer machine) {
-        throw new NotImplementedException();
+        return false;
     }
 
     //////////////////////////
@@ -143,7 +146,7 @@ public class DirectoryHandler {
      * @return
      */
     public static boolean updateMachine(MachineContainer machine) {
-        throw new NotImplementedException();
+        return false;
     }
 
     /**
@@ -153,7 +156,7 @@ public class DirectoryHandler {
      */
     public static ArrayList<MachineContainer> getAllMachines() {
         //Maybe be easier and faster as a list of strings instead
-        throw new NotImplementedException();
+        return null;
     }
 
     /**
@@ -169,7 +172,7 @@ public class DirectoryHandler {
      * @return
      */
     public GroupContainer getGroupByName(String name) {
-        throw new NotImplementedException();
+        return null;
     }
 
     /**
@@ -179,7 +182,7 @@ public class DirectoryHandler {
      * @return
      */
     public GroupContainer getMachineByName(String name) {
-        throw new NotImplementedException();
+        return null;
     }
 
 }

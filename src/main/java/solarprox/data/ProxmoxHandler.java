@@ -1,7 +1,8 @@
 package solarprox.data;
 
 import org.json.simple.JSONObject;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
+import java.io.IOException;
 
 public class ProxmoxHandler {
     private static String username, password, realm, address;
@@ -19,7 +20,7 @@ public class ProxmoxHandler {
      * @return
      */
     public static boolean connectToProxmox() {
-        throw new NotImplementedException();
+        return false;
     }
 
     ///////////////////////
@@ -32,16 +33,19 @@ public class ProxmoxHandler {
      * @return
      */
     public static boolean disconnectFromProxmox() {
-        throw new NotImplementedException();
+        return false;
     }
 
     /**
-     * Rolls back a device to a certain snapshot.
-     *
+     * Returns default snapshot
+     * @param machineID
      * @return
+     * @throws IOException
      */
-    public static JSONObject rollback(String machineID, String snapshotID) {
-        throw new NotImplementedException();
+    public static int rollback(String machineID) throws IOException {
+        Process p = new ProcessBuilder("scripts/stop.sh", machineID).start();
+        System.out.println("Rolling back machine " + machineID);
+        return 1;
     }
 
     ///////////////////////////
@@ -49,12 +53,16 @@ public class ProxmoxHandler {
     ///////////////////////////
 
     /**
-     * Rolls back a device to the latest snapshot.
-     *
+     * Rolls back to a certain snapshot
+     * @param machineID
+     * @param stateName
      * @return
+     * @throws IOException
      */
-    public static JSONObject rollback(String machineID) {
-        throw new NotImplementedException();
+    public static int rollback(String machineID, String stateName) throws IOException {
+        Process p = new ProcessBuilder("/scripts/stop.sh", machineID, stateName).start();
+        System.out.println("Called rollback on " + machineID + " with statname of " + stateName);
+        return 1;
     }
 
     /**
@@ -63,7 +71,7 @@ public class ProxmoxHandler {
      * @return
      */
     public static JSONObject getMachineSnapshots(String machineID) {
-        throw new NotImplementedException();
+        return null;
     }
 
     /**
@@ -72,7 +80,7 @@ public class ProxmoxHandler {
      * @return
      */
     public static JSONObject captureSnapshot(String machineID) {
-        throw new NotImplementedException();
+        return null;
     }
 
     /**
@@ -81,7 +89,7 @@ public class ProxmoxHandler {
      * @return
      */
     public static JSONObject getListOfMachines() {
-        throw new NotImplementedException();
+        return null;
     }
 
     /////////////////////////
@@ -93,43 +101,50 @@ public class ProxmoxHandler {
      *
      * @return
      */
-    public static JSONObject powerOff() {
-        throw new NotImplementedException();
+    public static JSONObject powerOffAll() {
+        return null;
     }
 
+
     /**
-     * Turns off a specific machine
+     * Turn on all machines
      *
      * @return
      */
-    public static JSONObject powerOff(String machineID) {
-        throw new NotImplementedException();
+    public static JSONObject powerOnAll() {
+        return null;
     }
 
     /**
-     * Turns on a all machines
-     *
+     * Turns on a certain machine
+     * @param machineID
      * @return
+     * @throws IOException
      */
-    public static JSONObject powerOn() {
-        throw new NotImplementedException();
+    public static int powerOn(String machineID) throws IOException {
+        Process p = new ProcessBuilder("/scripts/start.sh", machineID).start();
+        System.out.println("Powering on machine " + machineID);
+        return 0;
     }
 
     /**
      * Runs when the program is shutting down.
      */
     public void onShutdown() {
-        //disconnectFromProxmox  <- Commented out till not throwing exception
-        System.out.println("Shutdown from ProxmoxHandler");
+       disconnectFromProxmox();
+
     }
 
     /**
-     * Turns on a specific machine
-     *
+     * Turns off the machine
+     * @param machineID
      * @return
+     * @throws IOException
      */
-    public JSONObject powerOn(String machineID) {
-        throw new NotImplementedException();
+    public static int powerOff(String machineID) throws IOException {
+        Process p = new ProcessBuilder("/scripts/stop.sh", machineID).start();
+        System.out.println("Stopping machine " + machineID);
+        return 0;
     }
 
     /**
@@ -138,6 +153,6 @@ public class ProxmoxHandler {
      * @return
      */
     public JSONObject getStatus(String machineID) {
-        throw new NotImplementedException();
+        return null;
     }
 }
