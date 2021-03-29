@@ -16,7 +16,7 @@ import java.util.Properties;
 public class ConfigHandler {
     private static final Properties PROPERTIES = new Properties();
     private static final File FILE = new File("config.properties");
-    private static final double VERSIONNUMBER = 1.1;
+    private static final String VERSIONNUMBER = "1.1";
 
     public ConfigHandler() {
         try {
@@ -64,10 +64,6 @@ public class ConfigHandler {
     private void loadConfig() {
         try {
             PROPERTIES.load(new FileInputStream(FILE));
-            if (Double.parseDouble(PROPERTIES.getProperty("version")) != VERSIONNUMBER) {
-                System.out.println();
-                createNewConfig();
-            }
         } catch (IOException e) {
             System.err.println("The config file could not be read. Please relaunch the program or delete your current config.");
             e.printStackTrace();
