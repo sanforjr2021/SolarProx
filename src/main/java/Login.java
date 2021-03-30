@@ -1,6 +1,6 @@
-package solarprox.web;
-
 import solarprox.data.ProxmoxHandler;
+import solarprox.util.ConfigHandler;
+import solarprox.util.FileLogger;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -25,14 +25,22 @@ public class Login extends HttpServlet {
 
             writer.println("<h1>This is a simple java servlet.</h1>");
 
-
             try{
                 ProxmoxHandler.powerOff("100");
-                ProxmoxHandler.rollback("101");
-                ProxmoxHandler.powerOn("100");
             } catch(IOException e){
-                writer.println("<h3>Failed to run command</h3>");
+                writer.println("<h3>Failed to run command 1</h3>");
+                writer.println(e.getMessage());
             }
+            try{
+                ProxmoxHandler.powerOn("100");
+                ProxmoxHandler.rollback("101");
+            } catch(IOException e) {
+                writer.println("<h3>Failed to run command 2 & 3</h3>");
+                e.printStackTrace();
+                writer.println(e.getMessage());
+            }
+
+            ProxmoxHandler.powerOn("100");
             writer.println("</body>");
             writer.println("</html>");
 
