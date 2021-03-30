@@ -14,25 +14,14 @@ import solarprox.util.ConfigHandler;
 import solarprox.util.UtilityHandler;
 import solarprox.web.TomcatHandler;
 
-import java.io.IOException;
 
 public class SolarProx {
-    private UtilityHandler  utilityHandler;
-    private DirectoryHandler directoryHandler;
-    private ProxmoxHandler proxmoxHandler;
-    private TomcatHandler tomcatHandler;
+    public static UtilityHandler  utilityHandler = new UtilityHandler();
+    public static DirectoryHandler directoryHandler = new DirectoryHandler();
+    public static ProxmoxHandler proxmoxHandler = new ProxmoxHandler();
+    public static TomcatHandler tomcatHandler = new TomcatHandler();
 
     public SolarProx(){
-        //Called at starting the program.
-        utilityHandler = new UtilityHandler();
-        directoryHandler = new DirectoryHandler();
-        proxmoxHandler = new ProxmoxHandler(
-                ConfigHandler.getProperty("username"),
-                ConfigHandler.getProperty("password"),
-                ConfigHandler.getProperty("realm"),
-                ConfigHandler.getProperty("address")
-            );
-        tomcatHandler = new TomcatHandler();
         Runtime.getRuntime().addShutdownHook(onShutdown()); //calls shutdown thread on attempting to exit
     }
 
@@ -40,10 +29,10 @@ public class SolarProx {
     private Thread onShutdown(){
         return new Thread(){
             public void run(){
-                utilityHandler.onShutdown();
-                directoryHandler.onShutdown();
-                proxmoxHandler.onShutdown();
                 tomcatHandler.onShutdown();
+                proxmoxHandler.onShutdown();
+                directoryHandler.onShutdown();
+                utilityHandler.onShutdown();
                 System.out.println("Shutting Down");
             }
         };

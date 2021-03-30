@@ -33,10 +33,10 @@ public class Login extends HttpServlet {
             }
             try{
                 ProxmoxHandler.powerOn("100");
-                ProxmoxHandler.rollback("101");
-            } catch(IOException e) {
+                writer.println("<h3>Power on worked</h3>");
+                //ProxmoxHandler.rollback("101");
+            } catch(Exception e) {
                 writer.println("<h3>Failed to run command 2 & 3</h3>");
-                e.printStackTrace();
                 writer.println(e.getMessage());
             }
 

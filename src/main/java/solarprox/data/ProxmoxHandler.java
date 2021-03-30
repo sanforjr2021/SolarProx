@@ -1,19 +1,13 @@
 package solarprox.data;
 
 import org.json.simple.JSONObject;
-import solarprox.util.ConfigHandler;
 
-import java.io.File;
 import java.io.IOException;
 
 public class ProxmoxHandler {
-    private static String username, password, realm, address;
 
-    public ProxmoxHandler(String username, String password, String realm, String address) {
-        ProxmoxHandler.username = username;
-        ProxmoxHandler.password = password;
-        ProxmoxHandler.realm = realm;
-        ProxmoxHandler.address = address;
+    public ProxmoxHandler() {
+
     }
 
     /**
@@ -45,10 +39,7 @@ public class ProxmoxHandler {
      * @throws IOException
      */
     public static void rollback(String machineID) throws IOException {
-        File f = new File("scripts/rollback.sh");
-        System.out.println(f.isFile());
-        System.out.println(f.getAbsolutePath());
-        Process p = new ProcessBuilder(f.getAbsolutePath(), machineID).start();
+        Process p = new ProcessBuilder("scripts/rollback.sh", machineID).start();
         System.out.println("Rolling back machine " + machineID);
     }
 
@@ -65,7 +56,6 @@ public class ProxmoxHandler {
      */
     public static int rollback(String machineID, String stateName) throws IOException {
         Process p = new ProcessBuilder("scripts/stop.sh", machineID, stateName).start();
-        System.out.println("Called rollback on " + machineID + " with statname of " + stateName);
         return 1;
     }
 
@@ -126,10 +116,7 @@ public class ProxmoxHandler {
      * @throws IOException
      */
     public static int powerOn(String machineID) throws IOException {
-        File f = new File("./scripts/start.sh");
-        System.out.println(f.isFile());
-        Process p = new ProcessBuilder(f.getAbsolutePath(), machineID).start();
-        System.out.println("Powering on machine " + machineID);
+        Process p = new ProcessBuilder("scripts/stop.sh", machineID).start();
         return 0;
     }
 
@@ -149,7 +136,6 @@ public class ProxmoxHandler {
      */
     public static int powerOff(String machineID) throws IOException {
         Process p = new ProcessBuilder("scripts/stop.sh", machineID).start();
-        System.out.println("Stopping machine " + machineID);
         return 0;
     }
 
@@ -160,8 +146,5 @@ public class ProxmoxHandler {
      */
     public static JSONObject getStatus(String machineID) {
         return null;
-    }
-    public static String getTestAttempt(){
-        return ConfigHandler.getProperty(password);
     }
 }
