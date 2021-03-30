@@ -37,7 +37,9 @@
             <!--- copy from here to the end of the section div to create
             a new category ---->
             <div class="section">
-                
+                <?php
+                    echo "$_POST"
+                ?>
                 <h3>Avalible Boxes</h3>
                 
                 <div class="sectionBody">      

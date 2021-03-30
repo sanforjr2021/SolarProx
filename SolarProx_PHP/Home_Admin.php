@@ -97,17 +97,20 @@
                     function start($id)
                         {
                             $command = './start.sh pve '.$id;
-                            shell_exec($command);  
+                            shell_exec($command);
+                            echo "<script>window.location = window.location.href;</script>";
                         }
                     function stop($id)
                         {
                             $command = './stop.sh pve '.$id;
-                            shell_exec($command);  
+                            shell_exec($command);
+                            echo "<script>window.location = window.location.href;</script>";
                         }
                     function rollback($id)
                         {
                             $command = './rollback.sh pve '.$id.' base';
-                            shell_exec($command);  
+                            shell_exec($command); 
+                            echo "<script>window.location = window.location.href;</script>";
                         }
 
                 ?>
