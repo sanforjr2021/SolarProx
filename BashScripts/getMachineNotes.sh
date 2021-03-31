@@ -1,3 +1,16 @@
+#-----------------------------------------------------------------------------------------------#
+#                                     Created by: Force of Mercury                              #
+#                     This bash script takes variables from  Proxmox.config to print            #
+#                     out all info given when running a GET request to                          #
+#                     $HOST/api2/json/nodes/$NODE/qemu/$VMID/config. There is no                #
+#                     additional input required to run this command. The info in config         #
+#                     gives specific box info and is used to get box notes as well. user        #
+#                     will also have to give VMID to specify which VM they want the info for.   #
+#                                                                                               #
+#                                                                      int                      #
+#                     Example command to start: ./getMachineNotes.sh [VMID]                     #
+#-----------------------------------------------------------------------------------------------#
+
 #!/bin/bash
 decodeDataFromJson(){
     echo `echo $1 \
@@ -11,45 +24,26 @@ decodeDataFromJson(){
             | grep -w $2 \
             | awk -F "|" '{print $2}'`
 }
-. Proxmox.config
-PROX_USERNAME="$username"
-PROX_PASSWORD="$password"
-HOST="$host"
 
+. Proxmox.config #config file that pulls set input for multiple variables
+PROX_USERNAME="$username" #pulls username from Proxmox.config and sets it for PVEAuthCookie and CSRFPreventionToken
+PROX_PASSWORD="$password" #pulls password from Proxmox.config and sets it for PVEAuthCookie and CSRFPreventionToken
+HOST="$host" #pulls host address from Proxmox.config for commands using $HOST
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+#Runs curl command to retrieve Proxmox user's PVEAuthCookie and CSRFPreventionToken
+#Variables being used: $PROX_USERNAME , $PROX_PASSWORD , $HOST
 DATA=`curl -s -k -d "username=$PROX_USERNAME&password=$PROX_PASSWORD" $HOST/api2/json/access/ticket`
 TICKET=$(decodeDataFromJson $DATA 'ticket')
 CSRF=$(decodeDataFromJson $DATA 'CSRFPreventionToken')
+#---------------------------------------------------------------------------------------------------------------------------------------------
 
-NODE=${1}
-VMID=${2}
+NODE="$node" #pulls node from Proxmox.config and sets it for Rollback command
+VMID=${1} #user has to specify VMID of VM they are rolling back. First parameter when running command
 
-
-#START_TASK_DATA=`curl -s -k -b "PVEAuthCookie=$TICKET" -H "CSRFPreventionToken: $CSRF" -X GET $HOST/api2/json/nodes/$NODE/qemu/data.name`
-
+#---------------------------------------------------------------------------------------------------------------------------------------------
+#Runs curl command using PVEAuthCookie and CSRFPreventionToken to run a POST command to start the targeted VM.
+#Variables being used: $TICKET , $CSRF , $HOST , $NODE , $VMID
 START_TASK_DATA=`curl -s -k -b "PVEAuthCookie=$TICKET" -H "CSRFPreventionToken: $CSRF" -X GET $HOST/api2/json/nodes/$NODE/qemu/$VMID/config`
-#START_TASK_DATA=`pvesh -X GET /nodes/$NODE/qemu`
-#START_TASK_RESULT=$(decodeDataFromJson $START_TASK_DATA 'data')
-echo $START_TASK_DATA
-#jq .data.name $START_TASK_DATA
-#MACHINE_INFO=$(decodeDataFromJson $START_TASK_DATA 'data.name')
-#echo $MACHINE_INFO
-#echo $data['name']
-#$url="https://172.16.66.10:8006/api2/json/nodes/$NODE/qemu";
-#$text = file_get_contents($url);
-
-#$data = json_decode($text, true);
-
-##if ($data['Success'] === true) {
-#    $v = [];
-#    $columns = [""name","status""];
-#    for ($i = 0; $i< count($data['Value']); $i++) {
-#        foreach ($data['Value'][$i] as $key => $val) {
-#            if (in_array($key, $columns)) {
-#                $v[$key] = $val;
-#            }
-#        }
-#        $data['Value'][$i] = $v;
-#    }
-#}
-
-#$text = json_encode($data);##
+echo $START_TASK_DATA #prints output from GET request
+#---------------------------------------------------------------------------------------------------------------------------------------------
