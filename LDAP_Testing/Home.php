@@ -1,8 +1,8 @@
 <?php
     session_id(htmlspecialchars($_COOKIE["SessionID"]));
     session_start();
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,10 +22,37 @@
 </head>
 <body style="background: #2c5684"> <!-- hardcoded to blue to override boostrap --->
 
-    <div class="topnav">
-  <a class="active" href="./Home.php">Home</a>
-  <a style="position: absolute; top: 0px;right: 0px;" href="./Login.php">Logout</a>
-    </div>
+    <?php
+    
+        if ($_SESSION["priv"] == "Admin"){
+                echo '
+                <div class="topnav">
+                <a href="./Home_Admin.php">Admin Home</a>
+                <a class="active" href="./Home.php">Student Home</a>
+                <a style="position: absolute; top: 0px;right: 0px;" href="./Login.php">Logout</a>
+                </div>
+                
+                ';
+            }
+        elseif ($_SESSION["priv"] == "User"){
+                echo '
+                    <div class="topnav">
+                    <a class="active" href="./Home.php">Home</a>
+                    <a style="position: absolute; top: 0px;right: 0px;" href="./Login.php">Logout</a>
+                    </div>
+                
+                ';
+            }
+        else{
+                echo '<script> window.location.replace("./Login.php")</script>';
+            }
+        
+    
+    ?>
+    
+    
+    
+
     
 <header class="header">
     <h1>SolarProx</h1>
@@ -47,7 +74,7 @@
                 <div class="sectionBody">
                     
                 <?php
-                    echo $_SESSION["priv"];
+                    
                     
                     chdir("Scripts");
 

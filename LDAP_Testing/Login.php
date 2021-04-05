@@ -78,10 +78,12 @@ setcookie("SessionID", session_id(), time()+3600);
                         }
             else{
                 session_destroy();
+                
+                
             }
             
-            echo $_SESSION["priv"];
-            echo session_id();
+            //echo $_SESSION["priv"];
+            //echo session_id();
 
             ?>
             
