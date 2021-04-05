@@ -23,7 +23,7 @@
 <body style="background: #2c5684"> <!-- hardcoded to blue to override boostrap --->
 
     <?php
-    
+
         if ($_SESSION["priv"] == "Admin"){
                 echo '
                 <div class="topnav">
@@ -31,7 +31,7 @@
                 <a class="active" href="./Home.php">Student Home</a>
                 <a style="position: absolute; top: 0px;right: 0px;" href="./Login.php">Logout</a>
                 </div>
-                
+
                 ';
             }
         elseif ($_SESSION["priv"] == "User"){
@@ -40,20 +40,20 @@
                     <a class="active" href="./Home.php">Home</a>
                     <a style="position: absolute; top: 0px;right: 0px;" href="./Login.php">Logout</a>
                     </div>
-                
+
                 ';
             }
         else{
                 echo '<script> window.location.replace("./Login.php")</script>';
             }
-        
-    
-    ?>
-    
-    
-    
 
-    
+
+    ?>
+
+
+
+
+
 <header class="header">
     <h1>SolarProx</h1>
     <h2>Your solution to penetration testing with Proxmox</h2>
@@ -70,15 +70,15 @@
             a new category ---->
             <div class="section">
                 <h3>Avalible Boxes</h3>
-                
+
                 <div class="sectionBody">
-                    
+
                 <?php
-                    
-                    
+
+
                     chdir("Scripts");
 
-                    $result = shell_exec('./getAllMachineInfo.sh pve');
+                    $result = shell_exec('./getAllMachineInfo.sh ');
                     //echo "<pre>$result</pre>";
 
                     echo "<table style='width: 100%'><tr><th>Box Name</th><th>Box Status</th></tr>";
@@ -88,12 +88,12 @@
                     foreach($List as $Box){
                         $BoxID = $Box -> vmid;
                         $rollback = 'rollback'.$BoxID;
-                        
+
                         if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST[$rollback]))
                         {
                             rollback($BoxID);
                         }
-                        
+
                         if($Box -> status == "running")
                             {
                                 echo "<tr>";
@@ -106,7 +106,7 @@
                                 echo $Box -> status;
                                 echo "</td>";
 
-                                echo "<td>";      
+                                echo "<td>";
 
                                 $button3 =  "<form action='Home.php' method='post'><input type='submit' name='".$rollback."' value='Rollback' /></form>&emsp;";
                                 $button4 =  "<form action='ViewMachine.php' method='post'><input type='submit' name='".$BoxID."' value='View Machine' /></form>";
@@ -122,7 +122,7 @@
 
                     function rollback($id)
                         {
-                            $command = './rollback.sh pve '.$id.' base';
+                            $command = './rollback.sh  '.$id.' base';
                             shell_exec($command);
                             echo "<script>window.location = window.location.href;</script>";
                         }
