@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>SolarProx - Login</title>
+    <title>SolarProx - Box View</title>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Baloo+Paaji+2:wght@500&display=swap" rel="stylesheet">
@@ -20,6 +20,7 @@
 
     <div class="topnav">
   <a href="./Home.php">Home</a>
+  <a href="#" class="active" >Box View</a>
   <a style="position: absolute; top: 0px;right: 0px;" href="./Login.php">Logout</a>
     </div>
     
@@ -38,12 +39,29 @@
             a new category ---->
             <div class="section">
                 <?php
-                    echo "$_POST"
-                ?>
-                <h3>Avalible Boxes</h3>
-                
-                <div class="sectionBody">      
+                    $BoxID = array_search("View Machine", $_POST, true);
+                    //echo $BoxID;
+                    chdir("Scripts");
                     
+                    $getMachine = './getMachineNotes.sh pve '.$BoxID;
+                    $result = shell_exec($getMachine);
+                    //echo $result;
+                
+                    $BoxArr = json_decode($result);
+                    $data = $BoxArr -> data;
+                    $BoxName = $data -> name;
+                    $BoxDes = $data -> description;
+                    
+                
+                echo "<h3>Box Info</h3>";
+                
+                echo '<div class="sectionBody">';     
+                
+                echo "<b>Name: </b>{$BoxName}<br>";
+                //echo "<b>Description: </b>{$BoxDes}";
+                echo $BoxDes;
+                
+                ?>    
                 </div>
                 <br>
             </div>

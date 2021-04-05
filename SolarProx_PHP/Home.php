@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>SolarProx - Login</title>
+    <title>SolarProx - Home</title>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Baloo+Paaji+2:wght@500&display=swap" rel="stylesheet">
@@ -74,7 +74,7 @@
 
                                 echo "<td>";      
 
-                                $button3 =  "<form action='Home.php' method='post'><input type='submit' name='".$rollback."' value='Rollback' /></form>";
+                                $button3 =  "<form action='Home.php' method='post'><input type='submit' name='".$rollback."' value='Rollback' /></form>&emsp;";
                                 $button4 =  "<form action='ViewMachine.php' method='post'><input type='submit' name='".$BoxID."' value='View Machine' /></form>";
                                 echo $button3;
                                 echo $button4;
