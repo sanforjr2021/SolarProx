@@ -1,4 +1,11 @@
+<?php
+    session_id(htmlspecialchars($_COOKIE["SessionID"]));
+    session_start();
+
+?>
 <!DOCTYPE html>
+
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -16,12 +23,26 @@
 
 </head>
 <body style="background: #2c5684"> <!-- hardcoded to blue to override boostrap --->
-    <div class="topnav">
-  <a class="active" href="./Home_Admin.php">Admin Home</a>
-  <a href="./Home.php">Student Home</a>
-  <a style="position: absolute; top: 0px;right: 0px;" href="./Login.php">Logout</a>
-    </div>
-    
+    <?php
+
+        if ($_SESSION["priv"] == "Admin"){
+                echo '
+                <div class="topnav">
+                <a class="active" href="./Home_Admin.php">Admin Home</a>
+                <a href="./Home.php">Student Home</a>
+                <a style="position: absolute; top: 0px;right: 0px;" href="./Login.php">Logout</a>
+                </div>
+
+                ';
+            }
+        if ($_SESSION["priv"] != "Admin"){
+                echo '<script> window.location.replace("./Login.php")</script>';
+            }
+
+    ?>
+
+
+
 <header class="header">
     <h1>SolarProx</h1>
     <h2>Your solution to penetration testing with Proxmox</h2>
@@ -37,15 +58,17 @@
             <!--- copy from here to the end of the section div to create
             a new category ---->
             <div class="section">
-                
+
                 <h3>Admin Overview</h3>
-                
+
                 <div class="sectionBody">
-                    
+
                 <?php
+
+
                     chdir("Scripts");
 
-                    $result = shell_exec('./getAllMachineInfo.sh pve');
+                    $result = shell_exec('./getAllMachineInfo.sh ');
                     //echo "<pre>$result</pre>";
 
                     echo "<table style='width: 100%'><tr><th>Box Name</th><th>Box Status</th></tr>";
@@ -64,11 +87,11 @@
                         if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST[$stop]))
                                 {
                             stop($BoxID);
-                            } 
+                            }
                         if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST[$rollback]))
                                 {
                             rollback($BoxID);
-                            } 
+                            }
                         echo "<tr>";
 
                         echo "<td>";
@@ -79,7 +102,7 @@
                         echo $Box -> status;
                         echo "</td>";
 
-                        echo "<td>";      
+                        echo "<td>";
 
                         $button1 =  "<form action='Home_Admin.php' method='post'><input type='submit' name='".$start."' value='Start' /></form>&emsp;";
                         $button2 =  "<form action='Home_Admin.php' method='post'><input type='submit' name='".$stop."' value='Stop' /></form>&emsp;";
@@ -96,25 +119,25 @@
 
                     function start($id)
                         {
-                            $command = './start.sh pve '.$id;
+                            $command = './start.sh  '.$id;
                             shell_exec($command);
                             echo "<script>window.location = window.location.href;</script>";
                         }
                     function stop($id)
                         {
-                            $command = './stop.sh pve '.$id;
+                            $command = './stop.sh  '.$id;
                             shell_exec($command);
                             echo "<script>window.location = window.location.href;</script>";
                         }
                     function rollback($id)
                         {
-                            $command = './rollback.sh pve '.$id.' base';
-                            shell_exec($command); 
+                            $command = './rollback.sh  '.$id.' base';
+                            shell_exec($command);
                             echo "<script>window.location = window.location.href;</script>";
                         }
 
                 ?>
-                    
+
                 </div>
                 <br>
             </div>
