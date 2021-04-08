@@ -1,0 +1,3 @@
+administrator,50,a,s,b
+test,100,a,b,c
+a
