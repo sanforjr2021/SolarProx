@@ -75,7 +75,7 @@
                     //echo $BoxID;
                     chdir("Scripts");
 
-                    $getMachine = './getMachineNotes.sh  '.$BoxID;
+                    //$getMachine = './getMachineNotes.sh  '.$BoxID;
                     $result = shell_exec($getMachine);
                     //echo $result;
 
@@ -92,6 +92,15 @@
                 echo "<b>Name: </b>{$BoxName}<br>";
                 //echo "<b>Description: </b>{$BoxDes}";
                 echo $BoxDes;
+                
+                    
+                
+                echo'<form action="SendFlag.php" method="post">
+                        <label for="Flag">Flag:</label>
+                        <input type="text" id="Flag" name="Flag"><br><br>
+                        <input type="hidden" value="'.$BoxID.'" name="BoxID" />
+                        <input type="submit" value="Submit">
+                    </form>';
 
                 ?>
                 </div>

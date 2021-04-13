@@ -7,7 +7,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>SolarProx - Profile</title>
+    <title>SolarProx - Box Submission</title>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Baloo+Paaji+2:wght@500&display=swap" rel="stylesheet">
@@ -21,40 +21,6 @@
 
 </head>
 <body style="background: #2c5684"> <!-- hardcoded to blue to override boostrap --->
-
-    <?php
-
-        if ($_SESSION["priv"] == "Admin"){
-                echo '
-                <div class="topnav">
-                <a href="./Home_Admin.php">Admin Home</a>
-                <a href="./Home.php">Student Home</a>
-                <a class="active" href="./Profile.php">Profile</a>
-                <a style="position: absolute; top: 0px;right: 0px;" href="./Login.php">Logout</a>
-                </div>
-
-                ';
-            }
-        elseif ($_SESSION["priv"] == "User"){
-                echo '
-                    <div class="topnav">
-                    <a href="./Home.php">Home</a>
-                    <a class="active" href="./Profile.php">Profile</a>
-                    <a style="position: absolute; top: 0px;right: 0px;" href="./Login.php">Logout</a>
-                    </div>
-
-                ';
-            }
-        else{
-                echo '<script> window.location.replace("./Login.php")</script>';
-            }
-
-
-    ?>
-
-
-
-
 
 <header class="header">
     <h1>SolarProx</h1>
@@ -72,16 +38,31 @@
             a new category ---->
             <div class="section">
 
-
-                <?php
-                     echo "<h3>Profile - {$_SESSION["name"]}</h3>";
+                    <?php
+                        if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['BoxID']) and isset($_POST['Flag'])){
+                            echo "BoxID=".$_POST['BoxID'];
+                            echo "Flag=".$_POST['Flag'];
+                        
+                        
+                        
+                        
+                        
+                        }
+                        else{
+                            echo '<script> window.location.replace("./Login.php")</script>';
+                        }
+                
+                
+                
+                     echo "<h3>Box Submission - {$_SESSION["name"]}</h3>";
 
                      echo '<div class="sectionBody">';
                     
                     $UserList = explode("\n", file_get_contents("./Scripts/UserScores.txt"));
-                    $searchword = $_SESSION["name"];
-                    //echo $searchword;
-                    $User = array_filter($UserList, function($var) use ($searchword) { return preg_match("/$searchword/", $var); });
+                
+                    $searchword = 
+                    
+                    $User = array_filter($UserList, function($var) use ($searchword) { return preg_match("/\b$searchword\b/i", $var); });
                     
                     $User = array_filter($User);
                     
