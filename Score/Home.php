@@ -80,7 +80,7 @@
 
                     chdir("Scripts");
 
-                    //$result = shell_exec('./getAllMachineInfo.sh ');
+                    $result = shell_exec('./getAllMachineInfo.sh ');
                     //echo "<pre>$result</pre>";
 
                     echo "<table style='width: 100%'><tr><th>Box Name</th><th>Box Status</th></tr>";

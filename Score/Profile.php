@@ -84,7 +84,7 @@
                     //echo var_dump($UserList);
                     $User = array_filter($UserList, function($var) use ($searchword) { return preg_match("/$searchword/", $var); });
                     
-                    $User = array_filter($User);
+                    //$User = array_filter($User);
                     
                     //echo "<br>";
                     //echo var_dump($User);

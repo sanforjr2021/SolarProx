@@ -75,7 +75,7 @@
                     //echo $BoxID;
                     chdir("Scripts");
 
-                    //$getMachine = './getMachineNotes.sh  '.$BoxID;
+                    $getMachine = './getMachineNotes.sh  '.$BoxID;
                     $result = shell_exec($getMachine);
                     //echo $result;
 

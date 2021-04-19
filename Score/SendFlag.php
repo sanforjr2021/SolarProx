@@ -59,14 +59,17 @@
                      echo '<div class="sectionBody">';
                     
                     $UserList = explode("\n", file_get_contents("./Scripts/UserScores.txt"));
+                    $searchword = $_SESSION["name"];
+                    //echo "<br>{$searchword}<br>";
+                    //echo var_dump($UserList);
+                    $User = array_filter($UserList, function($var) use ($searchword) { return preg_match("/$searchword/", $var); });
+                    
+                    //$User = array_filter($User);
+                    
+                    //echo "<br>";
+                    //echo var_dump($User);
                 
-                    $searchword = 
-                    
-                    $User = array_filter($UserList, function($var) use ($searchword) { return preg_match("/\b$searchword\b/i", $var); });
-                    
-                    $User = array_filter($User);
-                    
-                    $UserArr = explode(',',$User[0]);
+                    $UserArr = explode(',',end($User));
 
                     
                     echo "<b>Total Points: </b>{$UserArr[1]}";
