@@ -1,3 +1,0 @@
-administrator,9999999999,All of them
-test,150,box1,box2,box3
-a
