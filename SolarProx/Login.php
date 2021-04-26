@@ -21,6 +21,7 @@ setcookie("SessionID", session_id(), time()+3600);
 
 
 </head>
+
 <body>
 <header class="header">
     <h1>SolarProx</h1>
@@ -33,8 +34,11 @@ setcookie("SessionID", session_id(), time()+3600);
         <div class="col-md-2"></div>
         <div class="col-md-8">
             <!--- Do not paste above here. This is for formatting. --->
+
             <!--- copy from here to the end of the section div to create
             a new category ---->
+            
+            
             <?php
             
             if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['User']) and isset($_POST['Pass']))
@@ -44,7 +48,7 @@ setcookie("SessionID", session_id(), time()+3600);
                             $ldappass = $_POST['Pass'];  // associated password
 
                             // connect to ldap server
-                            $ldapconn = ldap_connect("ldap://172.20.227.7")
+                            $ldapconn = ldap_connect("ldap://192.168.1.229")
                                 or die("Could not connect to LDAP server.");
                             ldap_set_option($ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
                             

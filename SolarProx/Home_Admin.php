@@ -1,13 +1,15 @@
 <?php
     session_id(htmlspecialchars($_COOKIE["SessionID"]));
     session_start();
-?>
 
+?>
 <!DOCTYPE html>
+
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>SolarProx - Home</title>
+    <title>SolarProx - Admin Home</title>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Baloo+Paaji+2:wght@500&display=swap" rel="stylesheet">
@@ -21,42 +23,28 @@
 
 
 </head>
-<body>
-
+<body> 
     <?php
 
         if ($_SESSION["priv"] == "Admin"){
                 echo '
                 <div class="topnav">
-                <a href="./Home_Admin.php">Admin Home</a>
-                <a class="active" href="./Home.php">Student Home</a>
+                <a class="active" href="./Home_Admin.php">Admin Home</a>
+                <a href="./Home.php">Student Home</a>
                 <a style="position: absolute; top: 0px;right: 0px;" href="./Login.php">Logout</a>
                 </div>
 
                 ';
             }
-        elseif ($_SESSION["priv"] == "User"){
-                echo '
-                    <div class="topnav">
-                    <a class="active" href="./Home.php">Home</a>
-                    <a style="position: absolute; top: 0px;right: 0px;" href="./Login.php">Logout</a>
-                    </div>
-
-                ';
-            }
-        else{
+        if ($_SESSION["priv"] != "Admin"){
                 echo '<script> window.location.replace("./Login.php")</script>';
             }
-
 
     ?>
 
 
 
-
-
 <header class="header">
-    <br>
     <h1>SolarProx</h1>
     <h2>Your solution to penetration testing with Proxmox</h2>
 </header>
@@ -71,7 +59,8 @@
             <!--- copy from here to the end of the section div to create
             a new category ---->
             <div class="section">
-                <h3>Avalible Boxes</h3>
+
+                <h3>Admin Overview</h3>
 
                 <div class="sectionBody">
 
@@ -83,40 +72,64 @@
                     $result = shell_exec('bash getAllMachineInfo.sh ');
                     //echo "<pre>$result</pre>";
 
-                    echo "<table style='width: 100%'><tr><th>Box Name</th><th>Box Status</th><th>Rollback</th><th>View Machine</th></tr>";
+                    echo '<table style="width: 100%"><tr class="first"><th>Box Name</th><th>Box Status&emsp;</th><th>Start</th><th>Stop</th><th>Rollback</th></tr>';
 
                     $BoxList = json_decode($result);
                     $List = $BoxList -> data;
                     foreach($List as $Box){
                         $BoxID = $Box -> vmid;
+                        $start = 'start'.$BoxID;
+                        $stop = 'stop'.$BoxID;
                         $rollback = 'rollback'.$BoxID;
-
-                        if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST[$rollback]))
-                        {
-                            rollback($BoxID);
-                        }
-
-                        if($Box -> status == "running")
-                            {
-                                echo "<tr>";
-
-                                echo "<td>";
-                                echo $Box -> name;
-                                echo "</td>";
-
-                                echo "<td>";
-                                echo $Box -> status;
-                                echo "</td>";
-
-                                $button3 =  "<td><form action='Home.php' method='post'><input type='submit' name='".$rollback."' value='Rollback' /></form></td>";
-                                $button4 =  "<td><form action='ViewMachine.php' method='post'><input type='submit' name='".$BoxID."' value='View Machine' /></form></td>";
-                                echo $button3;
-                                echo $button4;
-                                echo "</tr>";
+                        if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST[$start]))
+                                {
+                            start($BoxID);
                             }
-                        }
+                        if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST[$stop]))
+                                {
+                            stop($BoxID);
+                            }
+                        if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST[$rollback]))
+                                {
+                            rollback($BoxID);
+                            }
+                        echo "<tr>";
+
+                        echo "<td>";
+                        echo $Box -> name;
+                        echo "</td>";
+
+                        echo "<td>";
+                        echo $Box -> status;
+                        echo "</td>";
+
+                        
+
+                        $button1 =  "<td><form action='Home_Admin.php' method='post'><input type='submit' name='".$start."' value='Start' /></form>&emsp;</td>";
+                        $button2 =  "<td><form action='Home_Admin.php' method='post'><input type='submit' name='".$stop."' value='Stop' /></form>&emsp;</td>";
+                        $button3 =  "<td><form action='Home_Admin.php' method='post'><input type='submit' name='".$rollback."' value='Rollback' /></form>&emsp;</td>";
+                        echo $button1;
+                        echo $button2;
+                        echo $button3;
+
+                        
+
+                        echo "</tr>";
+                    }
                     echo "</table>";
 
+                    function start($id)
+                        {
+                            $command = 'bash start.sh  '.$id;
+                            shell_exec($command);
+                            echo "<script>window.location = window.location.href;</script>";
+                        }
+                    function stop($id)
+                        {
+                            $command = 'bash stop.sh  '.$id;
+                            shell_exec($command);
+                            echo "<script>window.location = window.location.href;</script>";
+                        }
                     function rollback($id)
                         {
                             $command = 'bash rollback.sh  '.$id.' base';
@@ -125,6 +138,7 @@
                         }
 
                 ?>
+
                 </div>
                 <br>
             </div>

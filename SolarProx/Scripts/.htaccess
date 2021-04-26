@@ -1,0 +1,4 @@
+RewriteEngine on 
+RewriteCond %{HTTP_REFERER} !^http://(www\.)?localhost [NC] 
+RewriteCond %{HTTP_REFERER} !^http://(www\.)?localhost.*$ [NC] 
+RewriteRule \.(config|sh)$ - [F]

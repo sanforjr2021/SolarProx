@@ -62,6 +62,7 @@ th {
     text-align: left;
     background-color: #ff7a00;
     font-size: 120%;
+    color:#000;	
 }
 
 td {
@@ -78,7 +79,7 @@ td input{
     background-color: #db8f49;
 }
 tr:nth-child(even) {
-    background-color: #795738;
+    background-color: #d59a5c;
 }
 
 tr:nth-child(odd) {
@@ -128,5 +129,10 @@ button {
 .topnav a.active {
     background-color: #20A4F3;
     color: white;
+}
+
+.first:hover {
+    background-color: #ff7a00;
+    color:#000;
 }
 /* topnav end ----------------------------------------------------------*/

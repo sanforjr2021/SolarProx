@@ -55,7 +55,6 @@
 
 
 <header class="header">
-    <br>
     <h1>SolarProx</h1>
     <h2>Your solution to penetration testing with Proxmox</h2>
 </header>

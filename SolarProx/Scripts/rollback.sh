@@ -38,7 +38,7 @@ CSRF=$(decodeDataFromJson $DATA 'CSRFPreventionToken') #sets CSRF value
 
 NODE="$node" #pulls node from Proxmox.config and sets it for Rollback command
 TARGET_VMID=${1} #user has to specify VMID of VM they are rolling back. First parameter when running command
-SNAPSHOT_NAME=${2} #user has to specify SNAPSHOT_NAME of VM that they want VM rolled back to. Second parameter when running command
+SNAPSHOT_NAME="$snapshot" #user has to specify SNAPSHOT_NAME of VM that they want VM rolled back to. Second parameter when running command
 
 #---------------------------------------------------------------------------------------------------------------------------------------------
 #Runs curl command with PVEAuthCookie and CSRFPreventionToken to run a POST command to rollback the targeted VM.
