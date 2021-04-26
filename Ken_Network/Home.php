@@ -33,6 +33,7 @@ if ($_SESSION["priv"] == "Admin") {
                 <a style="" href="./Login.php">Logout</a>
                 <h1>SolarProx</h1>
                 <h2>Your solution to penetration testing with Proxmox</h2>
+                <br>
                 </div>
 
                 ';
@@ -43,6 +44,7 @@ if ($_SESSION["priv"] == "Admin") {
                     <a href="./Login.php">Logout</a>
                     <h1>SolarProx</h1>
                     <h2>Your solution to penetration testing with Proxmox</h2>
+                    <br>
                     </div>
 
                 ';

@@ -2,6 +2,7 @@
 session_start();
 setcookie("SessionID", session_id(), time()+3600);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,36 +19,12 @@ setcookie("SessionID", session_id(), time()+3600);
     <link href="main.css" rel="stylesheet">
     <!-- Local files -->
 
-
 </head>
-<body> <!-- hardcoded to blue to override boostrap --->
-
-<?php
-
-if ($_SESSION["priv"] == "Admin") {
-    echo '
-                <div class="topnav">
-                <a href="./Home_Admin.php">Admin Home</a>
-                <a class="active" href="./Home.php">Student Home</a>
-                <a style="" href="./Login.php">Logout</a>
-                </div>
-
-                ';
-} elseif ($_SESSION["priv"] == "User") {
-    echo '
-                    <div class="topnav">
-                    <a class="active" href="./Home.php">Home</a>
-                    <a href="./Login.php">Logout</a>
-                    </div>
-
-                ';
-} else {
-    echo '<script> window.location.replace("./Login.php")</script>';
-}
-?>
-<header>
+<body>
+<header class="header">
     <h1>SolarProx</h1>
     <h2>Your solution to penetration testing with Proxmox</h2>
+    <br>
 </header>
 <br>
 <!--- This is the main content --->
@@ -63,42 +40,45 @@ if ($_SESSION["priv"] == "Admin") {
 
             <?php
 
-            if ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['User']) and isset($_POST['Pass'])) {
-                // using ldap bind
-                $ldaprdn = "cn={$_POST['User']},cn=Users,dc=prox,dc=corp";    // ldap rdn or dn
-                $ldappass = $_POST['Pass'];  // associated password
+            if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['User']) and isset($_POST['Pass']))
+                        {
+                            // using ldap bind
+                            $ldaprdn  = "cn={$_POST['User']},cn=Users,dc=prox,dc=corp";    // ldap rdn or dn
+                            $ldappass = $_POST['Pass'];  // associated password
 
-                // connect to ldap server
-                $ldapconn = ldap_connect("ldap://172.20.227.7")
-                or die("Could not connect to LDAP server.");
-                ldap_set_option($ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
+                            // connect to ldap server
+                            $ldapconn = ldap_connect("ldap://172.20.227.7")
+                                or die("Could not connect to LDAP server.");
+                            ldap_set_option($ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
 
 
-                if ($ldapconn) {
+                            if ($ldapconn) {
 
-                    // binding to ldap server
-                    $ldapbind = @ldap_bind($ldapconn, $ldaprdn, $ldappass);
+                                // binding to ldap server
+                                $ldapbind = @ldap_bind($ldapconn, $ldaprdn, $ldappass);
 
-                    // verify binding
-                    if ($ldapbind) {
-                        echo "LDAP bind successful...";
-                        if ($_POST['User'] == 'einstein') {
-                            echo '<br> Admin';
-                            $_SESSION["priv"] = "Admin";
-                            echo '<script> window.location.replace("./Home_Admin.php")</script>';
-                        } else {
-                            echo '<br> User';
-                            $_SESSION["priv"] = "User";
-                            echo '<script> window.location.replace("./Home.php")</script>';
+                                // verify binding
+                                if ($ldapbind) {
+                                    echo "LDAP bind successful...";
+                                        if ($_POST['User'] == 'einstein'){
+                                            echo '<br> Admin';
+                                            $_SESSION["priv"] = "Admin";
+                                            echo '<script> window.location.replace("./Home_Admin.php")</script>';
+                                        }
+                                        else{
+                                            echo '<br> User';
+                                            $_SESSION["priv"] = "User";
+                                            echo '<script> window.location.replace("./Home.php")</script>';
+                                        }
+
+                                } else {
+                                    echo "LDAP bind failed...";
+
+                                }
+
+                            }
                         }
-
-                    } else {
-                        echo "LDAP bind failed...";
-
-                    }
-
-                }
-            } else {
+            else{
                 session_destroy();
 
 
@@ -111,6 +91,7 @@ if ($_SESSION["priv"] == "Admin") {
 
             <div class="section">
                 <h3>Please Authenticate Below</h3>
+                <br>
                 <div class="sectionBody">
                     <form action='Login.php' method='post'>
                         <label for="User">Username:</label>
@@ -126,9 +107,9 @@ if ($_SESSION["priv"] == "Admin") {
             <!---end of Category --->
 
             <!--- DO NOT EDIT BELOW HERE. This is for formatting--->
+            </div>
+            <br>
         </div>
-        <br>
     </div>
-</div>
 </body>
 </html>

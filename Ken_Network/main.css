@@ -3,7 +3,7 @@ html, body {
     width: 100%;
     text-align: center;
     align-content: center;
-    background: #54748C;
+    background: #475055;
 }
 
 header {
@@ -15,16 +15,19 @@ header {
 /* Text */
 h1 {
     color: #ff7a00;
+    font-size: 60px;
     font-family: 'Baloo Paaji 2', cursive;
 }
 
 h2 {
+    font-size: 35px;
     color: #20A4F3;
     font-family: 'Bebas Neue', cursive;
 }
 
 h3 {
     color: #FF7A00;
+    font-size: 40px;
     font-family: 'Bebas Neue', cursive;
 }
 
@@ -116,5 +119,7 @@ button {
     background-color: #20A4F3;
     color: white;
 }
-
+form button{
+    font-family: 'Montserrat', sans-serif;
+}
 /* topnav end ----------------------------------------------------------*/
