@@ -1,6 +1,6 @@
 <?php
-session_id(htmlspecialchars($_COOKIE["SessionID"]));
-session_start();
+    session_id(htmlspecialchars($_COOKIE["SessionID"]));
+    session_start();
 ?>
 
 <!DOCTYPE html>
@@ -21,37 +21,45 @@ session_start();
 
 
 </head>
-<body> <!-- hardcoded to blue to override boostrap --->
+<body>
 
-<?php
+    <?php
 
-if ($_SESSION["priv"] == "Admin") {
-    echo '
+        if ($_SESSION["priv"] == "Admin"){
+                echo '
                 <div class="topnav">
                 <a href="./Home_Admin.php">Admin Home</a>
                 <a class="active" href="./Home.php">Student Home</a>
-                <a style="" href="./Login.php">Logout</a>
-                <h1>SolarProx</h1>
-                <h2>Your solution to penetration testing with Proxmox</h2>
-                <br>
+                <a style="position: absolute; top: 0px;right: 0px;" href="./Login.php">Logout</a>
                 </div>
 
                 ';
-} elseif ($_SESSION["priv"] == "User") {
-    echo '
+            }
+        elseif ($_SESSION["priv"] == "User"){
+                echo '
                     <div class="topnav">
                     <a class="active" href="./Home.php">Home</a>
-                    <a href="./Login.php">Logout</a>
-                    <h1>SolarProx</h1>
-                    <h2>Your solution to penetration testing with Proxmox</h2>
-                    <br>
+                    <a style="position: absolute; top: 0px;right: 0px;" href="./Login.php">Logout</a>
                     </div>
 
                 ';
-} else {
-    echo '<script> window.location.replace("./Login.php")</script>';
-}
-?>
+            }
+        else{
+                echo '<script> window.location.replace("./Login.php")</script>';
+            }
+
+
+    ?>
+
+
+
+
+
+<header class="header">
+    <br>
+    <h1>SolarProx</h1>
+    <h2>Your solution to penetration testing with Proxmox</h2>
+</header>
 <br>
 <!--- This is the main content --->
 <div class="container-fluid">
@@ -67,67 +75,65 @@ if ($_SESSION["priv"] == "Admin") {
 
                 <div class="sectionBody">
 
-                    <?php
+                <?php
 
 
                     chdir("Scripts");
 
-                    $result = shell_exec('./getAllMachineInfo.sh ');
+                    $result = shell_exec('bash getAllMachineInfo.sh ');
                     //echo "<pre>$result</pre>";
 
-                    echo "<table style='width: 100%'><tr><th>Box Name</th><th>Box Status</th></tr>";
+                    echo "<table style='width: 100%'><tr><th>Box Name</th><th>Box Status</th><th>Rollback</th><th>View Machine</th></tr>";
 
                     $BoxList = json_decode($result);
-                    $List = $BoxList->data;
-                    foreach ($List as $Box) {
-                        $BoxID = $Box->vmid;
-                        $rollback = 'rollback' . $BoxID;
+                    $List = $BoxList -> data;
+                    foreach($List as $Box){
+                        $BoxID = $Box -> vmid;
+                        $rollback = 'rollback'.$BoxID;
 
-                        if ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST[$rollback])) {
+                        if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST[$rollback]))
+                        {
                             rollback($BoxID);
                         }
 
-                        if ($Box->status == "running") {
-                            echo "<tr>";
+                        if($Box -> status == "running")
+                            {
+                                echo "<tr>";
 
-                            echo "<td>";
-                            echo $Box->name;
-                            echo "</td>";
+                                echo "<td>";
+                                echo $Box -> name;
+                                echo "</td>";
 
-                            echo "<td>";
-                            echo $Box->status;
-                            echo "</td>";
+                                echo "<td>";
+                                echo $Box -> status;
+                                echo "</td>";
 
-                            echo "<td>";
-
-                            $button3 = "<form action='Home.php' method='post'><input type='submit' name='" . $rollback . "' value='Rollback' /></form>&emsp;";
-                            $button4 = "<form action='ViewMachine.php' method='post'><input type='submit' name='" . $BoxID . "' value='View Machine' /></form>";
-                            echo $button3;
-                            echo $button4;
-
-                            echo "</td>";
-
-                            echo "</tr>";
+                                $button3 =  "<td><form action='Home.php' method='post'><input type='submit' name='".$rollback."' value='Rollback' /></form></td>";
+                                $button4 =  "<td><form action='ViewMachine.php' method='post'><input type='submit' name='".$BoxID."' value='View Machine' /></form></td>";
+                                echo $button3;
+                                echo $button4;
+                                echo "</tr>";
+                            }
                         }
-                    }
                     echo "</table>";
 
                     function rollback($id)
-                    {
-                        $command = 'bash rollback.sh  ' . $id . ' base';
-                        shell_exec($command);
-                        echo "<script>window.location = window.location.href;</script>";
-                    }
+                        {
+                            $command = 'bash rollback.sh  '.$id.' base';
+                            shell_exec($command);
+                            echo "<script>window.location = window.location.href;</script>";
+                        }
 
-                    ?>
+                ?>
                 </div>
                 <br>
             </div>
             <!---end of Category --->
 
             <!--- DO NOT EDIT BELOW HERE. This is for formatting--->
+            </div>
+            <br>
         </div>
-        <br>
     </div>
 </div>
 </body>

@@ -1,12 +1,13 @@
 <?php
-session_id(htmlspecialchars($_COOKIE["SessionID"]));
-session_start();
+    session_id(htmlspecialchars($_COOKIE["SessionID"]));
+    session_start();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>SolarProx - Home</title>
+    <title>SolarProx - View Machine</title>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Baloo+Paaji+2:wght@500&display=swap" rel="stylesheet">
@@ -20,39 +21,41 @@ session_start();
 
 
 </head>
-<body> <!-- hardcoded to blue to override boostrap --->
+<body>
 
-<?php
+        <?php
 
-if ($_SESSION["priv"] == "Admin") {
-    echo '
+        if ($_SESSION["priv"] == "Admin"){
+                echo '
                 <div class="topnav">
                 <a href="./Home_Admin.php">Admin Home</a>
-                <a class="active" href="./Home.php">Student Home</a>
-                <a style="" href="./Login.php">Logout</a>
-                <h1>SolarProx</h1>
-                <h2>Your solution to penetration testing with Proxmox</h2>
-                <br>
+                <a href="./Home.php">Student Home</a>
+                <a href="#" class="active" >Box View</a>
+                <a style="position: absolute; top: 0px;right: 0px;" href="./Login.php">Logout</a>
                 </div>
 
                 ';
-} elseif ($_SESSION["priv"] == "User") {
-    echo '
+            }
+        elseif ($_SESSION["priv"] == "User"){
+                echo '
                     <div class="topnav">
-                    <a class="active" href="./Home.php">Home</a>
-                    <a href="./Login.php">Logout</a>
-                    <h1>SolarProx</h1>
-                    <h2>Your solution to penetration testing with Proxmox</h2>
+                    <a href="./Home.php">Home</a>
+                    <a href="#" class="active" >Box View</a>
+                    <a style="position: absolute; top: 0px;right: 0px;" href="./Login.php">Logout</a>
                     </div>
 
                 ';
-} else {
-    echo '<script> window.location.replace("./Login.php")</script>';
-}
-?>
+            }
+        else{
+                echo '<script> window.location.replace("./Login.php")</script>';
+            }
+
+
+    ?>
 
 
 <header class="header">
+    <br>
     <h1>SolarProx</h1>
     <h2>Your solution to penetration testing with Proxmox</h2>
 </header>
@@ -67,37 +70,39 @@ if ($_SESSION["priv"] == "Admin") {
             a new category ---->
             <div class="section">
                 <?php
-                $BoxID = array_search("View Machine", $_POST, true);
-                //echo $BoxID;
-                chdir("Scripts");
+                    $BoxID = array_search("View Machine", $_POST, true);
+                    //echo $BoxID;
+                    chdir("Scripts");
 
-                $getMachine = 'bash getMachineNotes.sh  ' . $BoxID;
-                $result = shell_exec($getMachine);
-                //echo $result;
+                    $getMachine = 'bash getMachineNotes.sh  '.$BoxID;
+                    $result = shell_exec($getMachine);
+                    //echo $result;
 
-                $BoxArr = json_decode($result);
-                $data = $BoxArr->data;
-                $BoxName = $data->name;
-                $BoxDes = $data->description;
+                    $BoxArr = json_decode($result);
+                    $data = $BoxArr -> data;
+                    $BoxName = $data -> name;
+                    $BoxDes = $data -> description;
 
 
                 echo "<h3>Box Info</h3>";
 
                 echo '<div class="sectionBody">';
 
-                echo "<b>Name: </b> $BoxName <br>";
+                echo "<b>Name: </b>{$BoxName}<br>";
                 //echo "<b>Description: </b>{$BoxDes}";
                 echo $BoxDes;
 
                 ?>
+                </div>
+                <br>
+            </div>
+            <!---end of Category --->
+
+            <!--- DO NOT EDIT BELOW HERE. This is for formatting--->
             </div>
             <br>
         </div>
-        <!---end of Category --->
-
-        <!--- DO NOT EDIT BELOW HERE. This is for formatting--->
     </div>
-    <br>
 </div>
 </body>
 </html>

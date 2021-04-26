@@ -7,7 +7,7 @@ setcookie("SessionID", session_id(), time()+3600);
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>SolarProx - Home</title>
+    <title>SolarProx - Login</title>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Baloo+Paaji+2:wght@500&display=swap" rel="stylesheet">
@@ -19,12 +19,12 @@ setcookie("SessionID", session_id(), time()+3600);
     <link href="main.css" rel="stylesheet">
     <!-- Local files -->
 
+
 </head>
 <body>
 <header class="header">
     <h1>SolarProx</h1>
     <h2>Your solution to penetration testing with Proxmox</h2>
-    <br>
 </header>
 <br>
 <!--- This is the main content --->
@@ -33,13 +33,10 @@ setcookie("SessionID", session_id(), time()+3600);
         <div class="col-md-2"></div>
         <div class="col-md-8">
             <!--- Do not paste above here. This is for formatting. --->
-
             <!--- copy from here to the end of the section div to create
             a new category ---->
-
-
             <?php
-
+            
             if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['User']) and isset($_POST['Pass']))
                         {
                             // using ldap bind
@@ -50,7 +47,7 @@ setcookie("SessionID", session_id(), time()+3600);
                             $ldapconn = ldap_connect("ldap://172.20.227.7")
                                 or die("Could not connect to LDAP server.");
                             ldap_set_option($ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
-
+                            
 
                             if ($ldapconn) {
 
@@ -60,7 +57,7 @@ setcookie("SessionID", session_id(), time()+3600);
                                 // verify binding
                                 if ($ldapbind) {
                                     echo "LDAP bind successful...";
-                                        if ($_POST['User'] == 'einstein'){
+                                        if ($_POST['User'] == 'administrator'){
                                             echo '<br> Admin';
                                             $_SESSION["priv"] = "Admin";
                                             echo '<script> window.location.replace("./Home_Admin.php")</script>';
@@ -70,28 +67,27 @@ setcookie("SessionID", session_id(), time()+3600);
                                             $_SESSION["priv"] = "User";
                                             echo '<script> window.location.replace("./Home.php")</script>';
                                         }
-
+                                                
                                 } else {
                                     echo "LDAP bind failed...";
-
+                                    
                                 }
 
                             }
                         }
             else{
                 session_destroy();
-
-
+                
+                
             }
-
+            
             //echo $_SESSION["priv"];
             //echo session_id();
 
             ?>
-
+            
             <div class="section">
                 <h3>Please Authenticate Below</h3>
-                <br>
                 <div class="sectionBody">
                     <form action='Login.php' method='post'>
                         <label for="User">Username:</label>
@@ -100,7 +96,7 @@ setcookie("SessionID", session_id(), time()+3600);
                         <input type="password" id="Pass" name="Pass"><br><br>
                         <input type="submit" value="Login">
                     </form>
-
+                    
                 </div>
                 <br>
             </div>
@@ -111,5 +107,6 @@ setcookie("SessionID", session_id(), time()+3600);
             <br>
         </div>
     </div>
+</div>
 </body>
 </html>
