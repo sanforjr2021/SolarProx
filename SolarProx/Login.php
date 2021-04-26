@@ -11,16 +11,18 @@ setcookie("SessionID", session_id(), time()+3600);
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Baloo+Paaji+2:wght@500&display=swap" rel="stylesheet">
-    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon"/>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="main.css" rel="stylesheet">
     <!--- BootStrap --->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link href="main.css" rel="stylesheet">
     <!-- Local files -->
 
 
 </head>
-<body style="background: #2c5684"> <!-- hardcoded to blue to override boostrap --->
+
+<body>
 <header class="header">
     <h1>SolarProx</h1>
     <h2>Your solution to penetration testing with Proxmox</h2>
@@ -46,7 +48,7 @@ setcookie("SessionID", session_id(), time()+3600);
                             $ldappass = $_POST['Pass'];  // associated password
 
                             // connect to ldap server
-                            $ldapconn = ldap_connect("ldap://172.20.227.7")
+                            $ldapconn = ldap_connect("ldap://192.168.1.229")
                                 or die("Could not connect to LDAP server.");
                             ldap_set_option($ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
                             
@@ -59,7 +61,7 @@ setcookie("SessionID", session_id(), time()+3600);
                                 // verify binding
                                 if ($ldapbind) {
                                     echo "LDAP bind successful...";
-                                        if ($_POST['User'] == 'einstein'){
+                                        if ($_POST['User'] == 'administrator'){
                                             echo '<br> Admin';
                                             $_SESSION["priv"] = "Admin";
                                             echo '<script> window.location.replace("./Home_Admin.php")</script>';

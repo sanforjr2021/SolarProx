@@ -16,25 +16,25 @@ header {
 /* Text */
 h1 {
     color: #ff7a00;
-    font-size: 50px;
+    font-size: 40px;
     font-family: 'Baloo Paaji 2', cursive;
 }
 
 h2 {
     font-size: 25px;
     color: #20A4F3;
-    font-family: 'Bebas Neue', cursive;
+    font-family: 'Bebas Neue', sans-serif;
 }
 
 h3 {
     color: #FF7A00;
     font-size: 30px;
-    font-family: 'Bebas Neue', cursive;
+    font-family: 'Bebas Neue', sans-serif;
 }
 
 h4 {
     color: #20A4F3;
-    font-family: 'Bebas Neue', cursive;
+    font-family: 'Bebas Neue', sans-serif;
 }
 
 p, li {
@@ -59,26 +59,36 @@ li {
 }
 
 th {
-    text-align: right;
+    text-align: left;
     background-color: #ff7a00;
+    font-size: 120%;
+    color:#000;	
 }
 
 td {
-    font-size: 150%;
+    font-size: 80%;
     text-align: left;
     font-family: 'Montserrat', sans-serif;
 }
-
-tr:nth-child(even) {
+td input:hover{
+    color: #ffffff;
+    background-color: #20A4F3;
+}
+td input{
+    color: #000;
     background-color: #db8f49;
+}
+tr:nth-child(even) {
+    background-color: #d59a5c;
 }
 
 tr:nth-child(odd) {
-    background-color: #FFB570;
+    background-color: #f8c69c;
 }
 
 tr:hover {
     background-color: #54748C;
+    color: #fff;
 }
 
 form {
@@ -104,7 +114,7 @@ button {
     padding: 14px 16px;
     text-decoration: none;
     font-size: 17px;
-    position: absolute;
+    display: inline-block;
     top: 0;
     right: 0;
 }
@@ -120,7 +130,38 @@ button {
     background-color: #20A4F3;
     color: white;
 }
-form button{
-    font-family: 'Montserrat', sans-serif;
+
+.first:hover {
+    background-color: #ff7a00;
+    color:#000;
 }
 /* topnav end ----------------------------------------------------------*/
+#topnav {
+    background-color: #333;
+    overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+#topnav a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    display: inline-block;
+    top: 0;
+    right: 0;
+}
+
+/* Change the color of links on hover */
+#topnav a:hover {
+    background-color: #ff7a00;
+    color: black;
+}
+
+/* Add a color to the active/current link */
+#topnav a.active {
+    background-color: #20A4F3;
+    color: white;
+}

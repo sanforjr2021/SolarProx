@@ -13,40 +13,43 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Baloo+Paaji+2:wght@500&display=swap" rel="stylesheet">
-    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon"/>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="main.css" rel="stylesheet">
     <!--- BootStrap --->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link href="main.css" rel="stylesheet">
     <!-- Local files -->
-
+    <script src="js/Sort.js"></script>
 
 </head>
-<body style="background: #2c5684"> <!-- hardcoded to blue to override boostrap --->
-    <?php
+<body onload="sortTable(0)"> 
 
-        if ($_SESSION["priv"] == "Admin"){
-                echo '
-                <div class="topnav">
+<?php
+if ($_SESSION["priv"] == "Admin"){
+    echo '
+    <div class="container-fluid">
+        <div class="row" id="topnav">
+            <div class="col-md-3">
                 <a class="active" href="./Home_Admin.php">Admin Home</a>
                 <a href="./Home.php">Student Home</a>
+            </div>
+            <div class="col-md-6">
+                <h1>SolarProx</h1>
+		<h2>Your solution to penetration testing with Proxmox</h2>   
+            </div>
+            <div class="col-md-3">
                 <a style="position: absolute; top: 0px;right: 0px;" href="./Login.php">Logout</a>
-                </div>
+            </div>
+        </div>
+    </div>
+    ';
+}
+if ($_SESSION["priv"] != "Admin"){
+    echo '<script> window.location.replace("./Login.php")</script>';
+}
+?>
 
-                ';
-            }
-        if ($_SESSION["priv"] != "Admin"){
-                echo '<script> window.location.replace("./Login.php")</script>';
-            }
-
-    ?>
-
-
-
-<header class="header">
-    <h1>SolarProx</h1>
-    <h2>Your solution to penetration testing with Proxmox</h2>
-</header>
 <br>
 <!--- This is the main content --->
 <div class="container-fluid">
@@ -68,10 +71,10 @@
 
                     chdir("Scripts");
 
-                    $result = shell_exec('./getAllMachineInfo.sh ');
+                    $result = shell_exec('bash getAllMachineInfo.sh ');
                     //echo "<pre>$result</pre>";
 
-                    echo "<table style='width: 100%'><tr><th>Box Name</th><th>Box Status</th></tr>";
+                    echo '<table id="myTable" style="width: 100%"><tr class="first"><th onclick="sortTable(0)">Box Name</th><th onclick="sortTable(1)">Box Status&emsp;</th><th>Start&emsp;</th><th>Stop&emsp;</th><th>Rollback&emsp;</th></tr>';
 
                     $BoxList = json_decode($result);
                     $List = $BoxList -> data;
@@ -102,16 +105,16 @@
                         echo $Box -> status;
                         echo "</td>";
 
-                        echo "<td>";
+                        
 
-                        $button1 =  "<form action='Home_Admin.php' method='post'><input type='submit' name='".$start."' value='Start' /></form>&emsp;";
-                        $button2 =  "<form action='Home_Admin.php' method='post'><input type='submit' name='".$stop."' value='Stop' /></form>&emsp;";
-                        $button3 =  "<form action='Home_Admin.php' method='post'><input type='submit' name='".$rollback."' value='Rollback' /></form>";
+                        $button1 =  "<td><form action='Home_Admin.php' method='post'><input type='submit' name='".$start."' value='Start' /></form></td>";
+                        $button2 =  "<td><form action='Home_Admin.php' method='post'><input type='submit' name='".$stop."' value='Stop' /></form></td>";
+                        $button3 =  "<td><form action='Home_Admin.php' method='post'><input type='submit' name='".$rollback."' value='Rollback' /></form></td>";
                         echo $button1;
                         echo $button2;
                         echo $button3;
 
-                        echo "</td>";
+                        
 
                         echo "</tr>";
                     }
@@ -119,19 +122,19 @@
 
                     function start($id)
                         {
-                            $command = './start.sh  '.$id;
+                            $command = 'bash start.sh  '.$id;
                             shell_exec($command);
                             echo "<script>window.location = window.location.href;</script>";
                         }
                     function stop($id)
                         {
-                            $command = './stop.sh  '.$id;
+                            $command = 'bash stop.sh  '.$id;
                             shell_exec($command);
                             echo "<script>window.location = window.location.href;</script>";
                         }
                     function rollback($id)
                         {
-                            $command = './rollback.sh  '.$id.' base';
+                            $command = 'bash rollback.sh  '.$id.' base';
                             shell_exec($command);
                             echo "<script>window.location = window.location.href;</script>";
                         }
